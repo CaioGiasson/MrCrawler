@@ -14,7 +14,12 @@ public class Mundo {
     }
 
     public void addCenario(Cenario c, boolean inicial ){
-        cenarios.add(c);
-        if (inicial) cenarioInicial = cenarios.size() -1;
+        try {
+            cenarios.add(c);
+            if (inicial) cenarioInicial = cenarios.size() -1;
+        }
+        catch ( Exception e ){
+            System.out.println(e);
+        }
     }
 }
