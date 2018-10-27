@@ -3,7 +3,44 @@ package com.engenha;
 public class Main {
 
     public static void main(String[] args) {
-	    System.out.println("Hello World!");
+
+        System.out.println("Hello World!");
+
+        Terreno [] terrenos = {
+            new Terreno("Madeira",1,0 ),
+            new Terreno("Calcada",1,0 ),
+            new Terreno("Floresta",3,0 ),
+            new Terreno("Caverna",2,0 ),
+        };
+
+        Mundo exemplo = new Mundo();
+
+        // PRIMEIRO CENARIO
+        Cenario c1 = new Cenario(terrenos[1], 0, 6 );
+        c1.addSala(new Sala("Curandeiro", 0,0, terrenos[0]), false);
+        c1.addSala(new Sala("Armas", 4,6, terrenos[0]), false);
+        c1.addSala(new Sala("Comida", 0,9, terrenos[0]), false);
+        c1.addSala(new Sala("Guilda", 12,0, terrenos[0]), false);
+        c1.salas.get(1).setSize(8,3);
+        exemplo.addCenario(c1, true);
+
+        // SEGUNDO CENARIO
+        Cenario c2 = new Cenario(terrenos[2],12,0);
+        exemplo.addCenario(c2, false);
+
+        //TERCEIRO CENARIO
+        Cenario c3 = new Cenario( terrenos[3],0,0);
+        c3.addSala(new Sala("Entrada", 0,18, terrenos[3]), true);
+        c3.addSala(new Sala("Sala1", 8,12, terrenos[3]), false);
+        c3.addSala(new Sala("Sala2", 16,18, terrenos[3]), false);
+        c3.addSala(new Sala("Sala3", 16,12, terrenos[3]), false);
+        c3.addSala(new Sala("SalaBoss", 0,0, terrenos[3]), false);
+        c3.salas.get(0).setInicio(1,2);
+        c3.salas.get(1).setSize(4,6);
+        c3.salas.get(4).setSize(10,6);
+        exemplo.addCenario(c2, false);
+
+        System.out.println("Partiu almocar");
     }
 }
 /*
@@ -379,7 +416,7 @@ class Personagem
 	int xp
 	Int for, des, vig, int
 	raça
-	int	hp, mana, def, energiaDescanso, energiaComida
+	int	hp, mana, def, descanso, comida
 	int 	arma atual
 	int 	armadura atual
 	int dinheiro
@@ -432,19 +469,18 @@ class Terreno
 	Int danoPorTurno
 
 class Sala
-	int Largura
-	int Altura
-	int Terreno
+
+	int [] tamanho
+	Terreno terreno
     int x
     int y
     int [] Posiccao
 class Cenario
-	int Terreno
-	int Largura
-	int Altura
-	ArrayList de Salas
-	int []PosicaoInicial
-	Sala Inicial
+	Terreno tipoTerreno
+	int[] tamanho
+	ArrayList<Sala> salas
+	int [] posicaoInicial
+	int salaInicial
 
 Class Missao
 
