@@ -4,8 +4,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Hello World!");
-
         Terreno [] terrenos = {
             new Terreno("Madeira",1,0 ),
             new Terreno("Calcada",1,0 ),
@@ -40,7 +38,7 @@ public class Main {
         c3.salas.get(4).setSize(10,6);
         exemplo.addCenario(c2, false);
 
-        System.out.println("Partiu almocar");
+        System.out.println("Bug resolvido");
     }
 }
 /*

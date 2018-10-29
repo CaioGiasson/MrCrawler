@@ -11,15 +11,11 @@ public class Mundo {
     Mundo( ){
         jogador =  new Personagem();
         tempo = 1;
+        cenarios = new ArrayList<Cenario>();
     }
 
     public void addCenario(Cenario c, boolean inicial ){
-        try {
-            cenarios.add(c);
-            if (inicial) cenarioInicial = cenarios.size() -1;
-        }
-        catch ( Exception e ){
-            System.out.println(e);
-        }
+        cenarios.add(c);
+        if (inicial) cenarioInicial = cenarios.size() -1;
     }
 }
