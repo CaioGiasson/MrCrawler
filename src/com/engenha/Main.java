@@ -38,7 +38,7 @@ public class Main {
         c3.salas.get(4).setSize(10,6);
         exemplo.addCenario(c2, false);
 
-        System.out.println("Bug resolvido");
+        System.out.println("Bug resolvido!!!");
     }
 }
 /*
