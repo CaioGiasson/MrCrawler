@@ -1,53 +1,158 @@
 package com.engenha;
 
-public class Main {
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+public class Main extends JPanel implements ActionListener {
+
+    public static Mundo arton;
+    public static JFrame f = new JFrame();
+
+	static Terreno [] sprites = {
+			new Terreno("Madeira",1,0 , "assets/tile-wood.jpeg"),
+			new Terreno("Calcada",1,0 , "assets/tile-rock.jpeg"),
+			new Terreno("Floresta",3,0,"assets/tile-grass.jpeg"),
+			new Terreno("Caverna",2,0,"assets/tile-cave.jpeg"),
+			new Terreno("Jogador",2,0,"assets/char-pj.png"),
+			new Terreno("Aliado",2,0,"assets/char-ally.png"),
+			new Terreno("Inimigo",2,0,"assets/char-enemy.png"),
+	};
+
+    public Main(){
+		addKeyListener(new Controle());
+		setFocusable(true);
+	}
 
     public static void main(String[] args) {
+		// GERANDO O FRAME PRA DEPOIS MOSTRAR TUDO
+		f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		f.setResizable(false);
+		f.setSize(1000, 700);
+		f.setLocationRelativeTo(null);
+		f.add(new Main());
+		f.setVisible(true);
 
-        Terreno [] terrenos = {
-            new Terreno("Madeira",1,0 ),
-            new Terreno("Calcada",1,0 ),
-            new Terreno("Floresta",3,0 ),
-            new Terreno("Caverna",2,0 ),
-        };
-
-        Mundo exemplo = new Mundo();
+        arton = new Mundo();
 
         // PRIMEIRO CENARIO
-        Cenario c1 = new Cenario(terrenos[1], 0, 6 );
-        c1.addSala(new Sala("Curandeiro", 0,0, terrenos[0]), false);
-        c1.addSala(new Sala("Armas", 4,6, terrenos[0]), false);
-        c1.addSala(new Sala("Comida", 0,9, terrenos[0]), false);
-        c1.addSala(new Sala("Guilda", 12,0, terrenos[0]), false);
-        c1.salas.get(1).setSize(8,3);
-        exemplo.addCenario(c1, true);
+        Cenario c1 = new Cenario("a cidade", "as ruas da cidade", sprites[1], 5, 10 );
+        c1.addSala(new Sala("o curandeiro", 2,2, sprites[0]));
+        c1.addSala(new Sala("a ferraria", 12,12, sprites[0]));
+        c1.addSala(new Sala("o mercadinho", 0,18, sprites[0]));
+        c1.addSala(new Sala("a guilda", 24,4, sprites[0]));
+        c1.addSala(new Sala("a taverna", 35,8, sprites[0]));
+		c1.addSala(new Sala("a saída", 28,22, sprites[2]));
+        c1.salas.get(1).setSize(12,6);
+        c1.salas.get(4).setSize(20,8);
+		c1.salas.get(5).setSize(5,2);
+		c1.salas.get(0).addNPC(5);
+		c1.salas.get(1).addNPC(5);
+		c1.salas.get(2).addNPC(5);
+		c1.salas.get(3).addNPC(5);
+		c1.salas.get(4).addNPC(5);
+		c1.addNPC(5);
+		c1.addNPC(5);
+		c1.addNPC(5);
+        arton.addCenario(c1);
 
         // SEGUNDO CENARIO
-        Cenario c2 = new Cenario(terrenos[2],12,0);
-        exemplo.addCenario(c2, false);
+        Cenario c2 = new Cenario("a floresta", "uma trilha", sprites[2],30,0);
+		c2.addSala(new Sala("a entrada", 28,0, sprites[0]));
+		c2.addSala(new Sala("a saída", 38,16, sprites[3]));
+		c2.salas.get(0).setSize(5, 2);
+		c2.salas.get(1).setSize(2,5);
+		c2.addNPC(6);
+		c2.addNPC(6);
+		c2.addNPC(6);
+		c2.addNPC(6);
+		c2.addNPC(6);
+		c2.addNPC(6);
+        arton.addCenario(c2);
 
         //TERCEIRO CENARIO
-        Cenario c3 = new Cenario( terrenos[3],0,0);
-        c3.addSala(new Sala("Entrada", 0,18, terrenos[3]), true);
-        c3.addSala(new Sala("Sala1", 8,12, terrenos[3]), false);
-        c3.addSala(new Sala("Sala2", 16,18, terrenos[3]), false);
-        c3.addSala(new Sala("Sala3", 16,12, terrenos[3]), false);
-        c3.addSala(new Sala("SalaBoss", 0,0, terrenos[3]), false);
-        c3.salas.get(0).setInicio(1,2);
-        c3.salas.get(1).setSize(4,6);
-        c3.salas.get(4).setSize(10,6);
-        exemplo.addCenario(c2, false);
+        Cenario c3 = new Cenario("a caverna", "um dos vários túneis", sprites[3],0,16);
+        c3.addSala(new Sala("a entrada", 0,16, sprites[2]));
+        c3.addSala(new Sala("um dos vários túneis", 2,16, sprites[1]));
+        c3.addSala(new Sala("um dos vários túneis", 10,16, sprites[1]));
+        c3.addSala(new Sala("um dos vários túneis", 20,17, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 28,9, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 26,5, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 35,8, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 33,15, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 11,7, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 4,3, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 15,8, sprites[1]));
+		c3.addSala(new Sala("um dos vários túneis", 16,11, sprites[1]));
+		c3.salas.get(0).setSize(2,5);
+		c3.salas.get(1).setSize(8,5);
+		c3.salas.get(2).setSize(12,2);
+		c3.salas.get(3).setSize(10,5);
+		c3.salas.get(4).setSize(2,8);
+		c3.salas.get(5).setSize(9,4);
+		c3.salas.get(6).setSize(1,7);
+		c3.salas.get(7).setSize(5,3);
+		c3.salas.get(8).setSize(15,1);
+		c3.salas.get(9).setSize(7,8);
+		c3.salas.get(10).setSize(1,4);
+		c3.salas.get(11).setSize(8,3);
+		c3.salas.get(1).addNPC(6);
+		c3.salas.get(1).addNPC(6);
+		c3.salas.get(2).addNPC(6);
+		c3.salas.get(3).addNPC(6);
+		c3.salas.get(3).addNPC(6);
+		c3.salas.get(4).addNPC(6);
+		c3.salas.get(5).addNPC(6);
+		c3.salas.get(6).addNPC(6);
+		c3.salas.get(6).addNPC(6);
+		c3.salas.get(7).addNPC(6);
+		c3.salas.get(8).addNPC(6);
+		c3.salas.get(9).addNPC(6);
+		c3.salas.get(10).addNPC(6);
+		c3.salas.get(11).addNPC(6);
+		c3.salas.get(11).addNPC(6);
+		c3.salas.get(9).addNPC(6);
+		c3.salas.get(9).addNPC(6);
+		c3.salas.get(9).addNPC(6);
+		c3.salas.get(9).addNPC(6);
+		c3.salas.get(9).addNPC(6);
+		arton.addCenario(c3);
 
-        System.out.println("Bug resolvido!!!");
+        EventQueue.invokeLater(new Runnable() {
+            @Override public void run() {
+                f.setVisible(true);
+            }
+        });
+
+        Tela.frame.update();
+    }
+
+	public void paint(Graphics g) {
+    	Tela.imprimir(g, this);
+	}
+
+	public void actionPerformed(ActionEvent e) {
+		arton.update();
+		Jogador.update();
+    	repaint();
+	}
+
+    static public void update(){
+        arton.update();
+        Jogador.update();
+        f.repaint();
     }
 }
 /*
 
-
 ROGUELIKE EXPERIMENTO 1
 Multiplayer AsciiArt Roguelike
 
-- Tamanho do grid: 80x50 caracteres
 - Temática: Fantasia Medieval sob ataque
 - Combate: Turn based, cada jogador tem até 6 segundos pra fazer seu turno
 - Narrativa: Escolha um dos lados: Alienígenas invasores, ou nativos usuários de magia
@@ -487,6 +592,9 @@ Class Missao
 
 
 
+
+
+    Vinícius (BSI) 41 99947-1627
 
 
 
